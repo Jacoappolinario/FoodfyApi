@@ -19,9 +19,11 @@ class CreateUserUseCase {
       throw new Error('User already exists!');
     }
 
-    const password = await crypto.randomBytes(8).toString('hex');
+    // Gera senha para o novo usuário
+    const generatedPassword = await crypto.randomBytes(8).toString('hex');
 
-    const passwordHash = await hash(password, 8);
+    // Criptografa senha gerada
+    const passwordHash = await hash(generatedPassword, 8);
 
     await this.usersRepository.create({
       name,

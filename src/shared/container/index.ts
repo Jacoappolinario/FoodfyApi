@@ -1,5 +1,7 @@
 import { container } from 'tsyringe';
 
+import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository';
+import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
 import { ChefsRepository } from '@modules/chefs/infra/typeorm/repositories/ChefsRepository';
 import { IChefsRepository } from '@modules/chefs/repositories/IChefsRepository';
 import { RecipesImagesRepository } from '@modules/recipes/infra/typeorm/repositories/RecipesImagesRepository';
@@ -20,4 +22,9 @@ container.registerSingleton<IRecipesRepository>(
 container.registerSingleton<IRecipesImagesRepository>(
   'RecipesImagesRepository',
   RecipesImagesRepository,
+);
+
+container.registerSingleton<IUsersRepository>(
+  'UsersRepository',
+  UsersRepository,
 );

@@ -8,6 +8,8 @@ import { ListChefsController } from '@modules/chefs/useCases/listChefs/ListChefs
 import { UpdateChefController } from '@modules/chefs/useCases/updateChef/UpdateChefController';
 import { UpdateChefAvatarController } from '@modules/chefs/useCases/updateChefAvatar/UpdateChefAvatarController';
 
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
+
 const chefsRoutes = Router();
 
 const uploadAvatar = multer(uploadConfig.upload('./tmp/avatar'));
@@ -17,6 +19,8 @@ const listChefsController = new ListChefsController();
 const updateChefController = new UpdateChefController();
 const deleteChefController = new DeleteChefController();
 const updateChefAvatarController = new UpdateChefAvatarController();
+
+chefsRoutes.use(ensureAuthenticated);
 
 chefsRoutes.post('/', createChefController.handle);
 

@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { IRecipesRepository } from '@modules/recipes/repositories/IRecipesRepository';
+import { AppError } from '@shared/errors/AppError';
 
 @injectable()
 class DeleteRecipeUseCase {
@@ -13,7 +14,7 @@ class DeleteRecipeUseCase {
     const recipeExists = await this.recipesRepository.findById(id);
 
     if (!recipeExists) {
-      throw new Error('Recipe not found');
+      throw new AppError('Recipe not found', 404);
     }
 
     await this.recipesRepository.delete(id);

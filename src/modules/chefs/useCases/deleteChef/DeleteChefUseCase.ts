@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { IChefsRepository } from '@modules/chefs/repositories/IChefsRepository';
+import { AppError } from '@shared/errors/AppError';
 
 @injectable()
 class DeleteChefUseCase {
@@ -13,7 +14,7 @@ class DeleteChefUseCase {
     const chefExists = await this.chefsRepository.findById(id);
 
     if (!chefExists) {
-      throw new Error('Chef not found!');
+      throw new AppError('Chef not found!', 404);
     }
 
     await this.chefsRepository.delete(id);

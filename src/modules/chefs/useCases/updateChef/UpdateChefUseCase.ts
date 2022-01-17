@@ -3,6 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import { IUpdateChefDTO } from '@modules/chefs/dtos/IUpdateChefDTO';
 import { Chef } from '@modules/chefs/infra/typeorm/entities/Chef';
 import { IChefsRepository } from '@modules/chefs/repositories/IChefsRepository';
+import { AppError } from '@shared/errors/AppError';
 
 @injectable()
 class UpdateChefUseCase {
@@ -15,7 +16,7 @@ class UpdateChefUseCase {
     const chefExists = await this.chefsRepository.findById(id);
 
     if (!chefExists) {
-      throw new Error('Chef not found!');
+      throw new AppError('Chef not found!', 404);
     }
 
     const chef = await this.chefsRepository.update(id, { name });

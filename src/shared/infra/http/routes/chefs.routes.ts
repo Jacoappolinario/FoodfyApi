@@ -20,11 +20,11 @@ const updateChefController = new UpdateChefController();
 const deleteChefController = new DeleteChefController();
 const updateChefAvatarController = new UpdateChefAvatarController();
 
+chefsRoutes.get('/', listChefsController.handle);
+
 chefsRoutes.use(ensureAuthenticated);
 
 chefsRoutes.post('/', createChefController.handle);
-
-chefsRoutes.get('/', listChefsController.handle);
 
 chefsRoutes.put('/:id', updateChefController.handle);
 

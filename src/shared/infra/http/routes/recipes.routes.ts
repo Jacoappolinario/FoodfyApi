@@ -8,6 +8,8 @@ import { ListRecipesController } from '@modules/recipes/useCases/listRecipes/Lis
 import { UpdateRecipeController } from '@modules/recipes/useCases/updateRecipe/UpdateRecipeController';
 import { UploadRecipeImagesController } from '@modules/recipes/useCases/uploadRecipeImages/UploadRecipeImagesController';
 
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
+
 const recipesRoutes = Router();
 
 const upload = multer(uploadConfig.upload('./tmp/recipes'));
@@ -18,9 +20,11 @@ const updateRecipeController = new UpdateRecipeController();
 const deleteRecipeController = new DeleteRecipeController();
 const uploadRecipeImagesController = new UploadRecipeImagesController();
 
-recipesRoutes.post('/', createRecipeController.handle);
-
 recipesRoutes.get('/', listRecipesController.handle);
+
+recipesRoutes.use(ensureAuthenticated);
+
+recipesRoutes.post('/', createRecipeController.handle);
 
 recipesRoutes.put('/:id', updateRecipeController.handle);
 

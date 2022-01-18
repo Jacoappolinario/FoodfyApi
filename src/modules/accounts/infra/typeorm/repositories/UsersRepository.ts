@@ -57,6 +57,10 @@ class UsersRepository implements IUsersRepository {
 
     return users;
   }
+
+  async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
 }
 
 export { UsersRepository };

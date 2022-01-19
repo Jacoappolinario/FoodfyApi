@@ -8,6 +8,7 @@ import { ListRecipesController } from '@modules/recipes/useCases/listRecipes/Lis
 import { UpdateRecipeController } from '@modules/recipes/useCases/updateRecipe/UpdateRecipeController';
 import { UploadRecipeImagesController } from '@modules/recipes/useCases/uploadRecipeImages/UploadRecipeImagesController';
 
+import { ensureAdmin } from '../middlewares/ensureAdmin';
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
 
 const recipesRoutes = Router();
@@ -20,19 +21,34 @@ const updateRecipeController = new UpdateRecipeController();
 const deleteRecipeController = new DeleteRecipeController();
 const uploadRecipeImagesController = new UploadRecipeImagesController();
 
+recipesRoutes.post(
+  '/',
+  ensureAuthenticated,
+  ensureAdmin,
+  createRecipeController.handle,
+);
+
 recipesRoutes.get('/', listRecipesController.handle);
 
-recipesRoutes.use(ensureAuthenticated);
+recipesRoutes.put(
+  '/:id',
+  ensureAuthenticated,
+  ensureAdmin,
+  updateRecipeController.handle,
+);
 
-recipesRoutes.post('/', createRecipeController.handle);
-
-recipesRoutes.put('/:id', updateRecipeController.handle);
-
-recipesRoutes.delete('/:id', deleteRecipeController.handle);
+recipesRoutes.delete(
+  '/:id',
+  ensureAuthenticated,
+  ensureAdmin,
+  deleteRecipeController.handle,
+);
 
 recipesRoutes.post(
   '/images/:id',
   upload.array('images'),
+  ensureAuthenticated,
+  ensureAdmin,
   uploadRecipeImagesController.handle,
 );
 

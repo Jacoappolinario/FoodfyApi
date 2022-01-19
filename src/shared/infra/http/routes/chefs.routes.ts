@@ -8,6 +8,7 @@ import { ListChefsController } from '@modules/chefs/useCases/listChefs/ListChefs
 import { UpdateChefController } from '@modules/chefs/useCases/updateChef/UpdateChefController';
 import { UpdateChefAvatarController } from '@modules/chefs/useCases/updateChefAvatar/UpdateChefAvatarController';
 
+import { ensureAdmin } from '../middlewares/ensureAdmin';
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
 
 const chefsRoutes = Router();
@@ -20,19 +21,34 @@ const updateChefController = new UpdateChefController();
 const deleteChefController = new DeleteChefController();
 const updateChefAvatarController = new UpdateChefAvatarController();
 
+chefsRoutes.post(
+  '/',
+  ensureAuthenticated,
+  ensureAdmin,
+  createChefController.handle,
+);
+
 chefsRoutes.get('/', listChefsController.handle);
 
-chefsRoutes.use(ensureAuthenticated);
+chefsRoutes.put(
+  '/:id',
+  ensureAuthenticated,
+  ensureAdmin,
+  updateChefController.handle,
+);
 
-chefsRoutes.post('/', createChefController.handle);
-
-chefsRoutes.put('/:id', updateChefController.handle);
-
-chefsRoutes.delete('/:id', deleteChefController.handle);
+chefsRoutes.delete(
+  '/:id',
+  ensureAuthenticated,
+  ensureAdmin,
+  deleteChefController.handle,
+);
 
 chefsRoutes.patch(
   '/:id/avatar',
   uploadAvatar.single('avatar'),
+  ensureAuthenticated,
+  ensureAdmin,
   updateChefAvatarController.handle,
 );
 

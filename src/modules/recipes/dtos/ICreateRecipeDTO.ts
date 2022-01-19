@@ -4,6 +4,7 @@ interface ICreateRecipeDTO {
   preparation: string[];
   information: string;
   chef_id: string;
+  user_id: string;
 }
 
 export { ICreateRecipeDTO };

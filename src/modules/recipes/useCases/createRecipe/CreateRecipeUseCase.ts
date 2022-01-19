@@ -17,6 +17,7 @@ class CreateRecipeUseCase {
     preparation,
     information,
     chef_id,
+    user_id,
   }: ICreateRecipeDTO): Promise<Recipe> {
     const recipe = await this.recipesRepository.create({
       title,
@@ -24,6 +25,7 @@ class CreateRecipeUseCase {
       preparation,
       information,
       chef_id,
+      user_id,
     });
 
     return recipe;

@@ -18,6 +18,7 @@ class RecipesRepository implements IRecipesRepository {
     preparation,
     information,
     chef_id,
+    user_id,
   }: ICreateRecipeDTO): Promise<Recipe> {
     const recipe = this.repository.create({
       title,
@@ -25,6 +26,7 @@ class RecipesRepository implements IRecipesRepository {
       preparation,
       information,
       chef_id,
+      user_id,
     });
 
     await this.repository.save(recipe);

@@ -21,7 +21,12 @@ usersRoutes.post(
   ensureAdmin,
   createUserController.handle,
 );
-usersRoutes.get('/', listUsersController.handle);
+usersRoutes.get(
+  '/',
+  ensureAuthenticated,
+  ensureAdmin,
+  listUsersController.handle,
+);
 
 usersRoutes.put(
   '/:id',

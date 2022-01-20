@@ -58,6 +58,16 @@ class UsersRepository implements IUsersRepository {
     return users;
   }
 
+  async turnAdmin(user_id: string): Promise<User> {
+    const user = await this.findById(user_id);
+
+    const userTurnAdmin = Object.assign(user, {
+      isAdmin: true,
+    });
+
+    return this.repository.save(userTurnAdmin);
+  }
+
   async delete(id: string): Promise<void> {
     await this.repository.delete(id);
   }

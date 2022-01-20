@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { CreateUserController } from '@modules/accounts/useCases/createUser/CreateUserController';
 import { DeleteUserController } from '@modules/accounts/useCases/deleteUser/DeleteUserController';
 import { ListUsersController } from '@modules/accounts/useCases/listUsers/ListUsersController';
+import { TurnUserAdminController } from '@modules/accounts/useCases/turnUserAdmin/TurnUserAdminController';
 import { UpdateUserController } from '@modules/accounts/useCases/updateUser/UpdateUserController';
 
 import { ensureAdmin } from '../middlewares/ensureAdmin';
@@ -14,6 +15,7 @@ const createUserController = new CreateUserController();
 const listUsersController = new ListUsersController();
 const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
+const turnUserAdminController = new TurnUserAdminController();
 
 usersRoutes.post(
   '/',
@@ -34,6 +36,14 @@ usersRoutes.put(
   ensureAdmin,
   updateUserController.handle,
 );
+
+usersRoutes.patch(
+  '/:id/admin',
+  ensureAuthenticated,
+  ensureAdmin,
+  turnUserAdminController.handle,
+);
+
 usersRoutes.delete(
   '/:id',
   ensureAuthenticated,

@@ -58,6 +58,14 @@ class UsersRepository implements IUsersRepository {
     return users;
   }
 
+  async showUserProfile(user_id: string): Promise<User> {
+    const user = await this.repository.findOne({
+      where: { id: user_id },
+    });
+
+    return user;
+  }
+
   async turnAdmin(user_id: string): Promise<User> {
     const user = await this.findById(user_id);
 

@@ -10,6 +10,7 @@ interface IUsersRepository {
   list(): Promise<User[]>;
   delete(id: string): Promise<void>;
   turnAdmin(user_id: string): Promise<User>;
+  showUserProfile(user_id: string): Promise<User>;
 }
 
 export { IUsersRepository };

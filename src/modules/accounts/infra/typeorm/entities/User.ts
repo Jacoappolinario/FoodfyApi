@@ -2,10 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
+
+import { Recipe } from '@modules/recipes/infra/typeorm/entities/Recipe';
 
 @Entity('users')
 class User {
@@ -29,6 +32,9 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  // @OneToMany(() => Recipe, recipe => recipe.user)
+  // recipes: Recipe[];
 
   constructor() {
     if (!this.id) {

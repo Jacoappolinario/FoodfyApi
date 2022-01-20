@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { CreateUserController } from '@modules/accounts/useCases/createUser/CreateUserController';
 import { DeleteUserController } from '@modules/accounts/useCases/deleteUser/DeleteUserController';
 import { ListUsersController } from '@modules/accounts/useCases/listUsers/ListUsersController';
+import { ShowUserProfileController } from '@modules/accounts/useCases/showUserProfile/ShowUserProfileController';
 import { TurnUserAdminController } from '@modules/accounts/useCases/turnUserAdmin/TurnUserAdminController';
 import { UpdateUserController } from '@modules/accounts/useCases/updateUser/UpdateUserController';
 
@@ -16,6 +17,7 @@ const listUsersController = new ListUsersController();
 const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
 const turnUserAdminController = new TurnUserAdminController();
+const showUserProfileController = new ShowUserProfileController();
 
 usersRoutes.post(
   '/',
@@ -49,6 +51,12 @@ usersRoutes.delete(
   ensureAuthenticated,
   ensureAdmin,
   deleteUserController.handle,
+);
+
+usersRoutes.get(
+  '/:id/profile',
+  ensureAuthenticated,
+  showUserProfileController.handle,
 );
 
 export { usersRoutes };

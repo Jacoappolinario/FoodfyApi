@@ -35,7 +35,7 @@ class Recipe {
   @Column()
   chef_id: string;
 
-  @Column()
+  @Column({ select: false })
   user_id: string;
 
   @CreateDateColumn()

@@ -62,6 +62,7 @@ class UsersRepository implements IUsersRepository {
 
   async showUserProfile(user_id: string): Promise<User> {
     const user = await this.repository.findOne({
+      relations: ['recipes', 'recipes.chef'],
       where: { id: user_id },
     });
 

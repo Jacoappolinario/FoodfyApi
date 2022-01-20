@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
 
+import { User } from '@modules/accounts/infra/typeorm/entities/User';
 import { Chef } from '@modules/chefs/infra/typeorm/entities/Chef';
 
 @Entity('recipes')
@@ -34,6 +35,10 @@ class Recipe {
 
   @Column()
   chef_id: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @Column({ select: false })
   user_id: string;

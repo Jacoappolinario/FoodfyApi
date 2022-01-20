@@ -33,8 +33,8 @@ class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  // @OneToMany(() => Recipe, recipe => recipe.user)
-  // recipes: Recipe[];
+  @OneToMany(() => Recipe, recipe => recipe.user)
+  recipes: Recipe[];
 
   constructor() {
     if (!this.id) {

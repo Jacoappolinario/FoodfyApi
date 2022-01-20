@@ -54,7 +54,7 @@ usersRoutes.delete(
 );
 
 usersRoutes.get(
-  '/:id/profile',
+  '/profile',
   ensureAuthenticated,
   showUserProfileController.handle,
 );

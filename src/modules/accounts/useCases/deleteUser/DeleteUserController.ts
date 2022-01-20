@@ -6,10 +6,11 @@ import { DeleteUserUseCase } from './DeleteUserUseCase';
 class DeleteUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
+    const userSession = request.user.id;
 
     const deleteUserUseCase = container.resolve(DeleteUserUseCase);
 
-    await deleteUserUseCase.execute(id);
+    await deleteUserUseCase.execute({ id, userSession });
 
     return response.status(200).send();
   }

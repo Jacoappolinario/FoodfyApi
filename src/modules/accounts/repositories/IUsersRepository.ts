@@ -7,7 +7,7 @@ interface IUsersRepository {
   update(user_id: string, { name, email }: IUpdateUserDTO): Promise<User>;
   findByEmail(email: string): Promise<User>;
   findById(id: string): Promise<User>;
-  list(): Promise<User[]>;
+  list(userSession: string): Promise<User[]>;
   delete(id: string): Promise<void>;
   turnAdmin(user_id: string): Promise<User>;
   showUserProfile(user_id: string): Promise<User>;

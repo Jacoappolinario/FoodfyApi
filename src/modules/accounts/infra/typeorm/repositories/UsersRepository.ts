@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Not, Repository } from 'typeorm';
 
 import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
 import { IUpdateUserDTO } from '@modules/accounts/dtos/IUpdateUserDTO';
@@ -52,8 +52,10 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  async list(): Promise<User[]> {
-    const users = await this.repository.find();
+  async list(userSession: string): Promise<User[]> {
+    const users = await this.repository.find({
+      id: Not(userSession),
+    });
 
     return users;
   }

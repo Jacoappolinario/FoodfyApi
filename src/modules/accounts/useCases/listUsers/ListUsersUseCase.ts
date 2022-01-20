@@ -3,6 +3,9 @@ import { inject, injectable } from 'tsyringe';
 import { User } from '@modules/accounts/infra/typeorm/entities/User';
 import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
 
+interface IRequest {
+  userSession: string;
+}
 @injectable()
 class ListUsersUseCase {
   constructor(
@@ -10,8 +13,8 @@ class ListUsersUseCase {
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute(): Promise<User[]> {
-    const users = await this.usersRepository.list();
+  async execute({ userSession }: IRequest): Promise<User[]> {
+    const users = await this.usersRepository.list(userSession);
 
     return users;
   }

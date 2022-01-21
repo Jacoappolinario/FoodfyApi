@@ -30,7 +30,10 @@ class ChefsRepository implements IChefsRepository {
   }
 
   async list(): Promise<Chef[]> {
-    const chefs = await this.repository.find();
+    const chefs = await this.repository.find({
+      relations: ['recipes'],
+    });
+
     return chefs;
   }
 
